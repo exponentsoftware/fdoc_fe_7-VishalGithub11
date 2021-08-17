@@ -1,8 +1,16 @@
 import React from "react";
 import "./album.css";
 
-const Album = ({ album_name, musician_name, album_cover, songs }) => {
+const Album = ({
+  id,
+  album_name,
+  musician_name,
+  album_cover,
+  songs,
+  handleDelete,
+}) => {
   console.log(songs);
+
   return (
     <div>
       <div className="poster">
@@ -13,6 +21,9 @@ const Album = ({ album_name, musician_name, album_cover, songs }) => {
 
       <div class="dropdown">
         <button class="dropbtn"> Hover to see Songs</button>
+        <button className="delete" onClick={() => handleDelete(id)}>
+          Delete
+        </button>
         <div class="dropdown-content">
           {songs.map((item, index) => {
             return <a href="#">{item}</a>;
@@ -22,5 +33,6 @@ const Album = ({ album_name, musician_name, album_cover, songs }) => {
     </div>
   );
 };
+
 
 export default Album;

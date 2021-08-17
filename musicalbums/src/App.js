@@ -2,7 +2,6 @@ import logo from "./logo.svg";
 import React, { useState } from "react";
 import "./App.css";
 import Albums from "./Albums";
-import Album from "./Album";
 import AddAlbum from "./AddAlbum";
 
 function App() {
@@ -14,7 +13,7 @@ function App() {
         id: "01",
         artist: "A.R. Rahman",
         album_title: "Mix",
-        album_cover: "01.png",
+        album_cover: "",
         songs: [
           "Maa_Tujhe_Salam",
           "Tere_Bina",
@@ -51,23 +50,44 @@ function App() {
     ],
   };
 
-  const [state, setState] = useState(db);
+  const [state, setState] = useState(db.albums);
 
+  const updateAlbum = (data) => {
+    const addItem = {
+      id: "05",
+      artist: data.artist,
+      album_title: data.album_title,
+      album_cover: data.image,
+      songs: ["more_piya", "ghar_aayenge", "ye dil"],
+    };
+    setState([...state, addItem]);
+  };
+
+  const handleDelete = (id) => {
+    alert("are you sure want to delete");
+    const data = state.filter((item) => item.id !== id);
+    console.log(data, id);
+    setState(data);
+  };
+
+  console.log("updated", state);
   return (
     <div className="App">
-      {state.albums.map((item, index) => {
+      {state.map((item, index) => {
         return (
           <Albums
             key={index}
+            id={item.id}
             album_name={item.album_title}
             musician_name={item.artist}
             album_cover={item.album_cover}
             songs={item.songs}
+            handleDelete={handleDelete}
           />
         );
       })}
 
-      <AddAlbum />
+      <AddAlbum updateAlbum={updateAlbum} />
     </div>
   );
 }
